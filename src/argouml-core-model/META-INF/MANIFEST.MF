@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %pluginProvider
+Bundle-SymbolicName: org.argouml.core.model;singleton:=true
+Bundle-Version: 0.29.3.qualifier
+Bundle-Localization: plugin
+Export-Package: org.argouml.model
+Eclipse-BuddyPolicy: registered
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

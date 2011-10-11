@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- 
+    Experimenting with maven for the nightly build.
+  -->
+
+  <groupId>org.argouml</groupId>
+  <artifactId>allCoreArgoUMLProjects</artifactId>
+  <version>0.1</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>src/argouml-core-model</module>
+    <module>src/argouml-core-model-mdr</module>
+    <module>src/argouml-core-model-euml</module>
+    <module>src/argouml-app</module>
+  </modules>
+
+  <name>argouml-core</name>
+  <description>
+The group of core argouml projects.
+This project is the virtual project that includes all core subprojects.
+  </description>
+</project>
