@@ -162,9 +162,6 @@ public class ActionExport2Gate extends AbstractAction {
         httpclient.getParams().setParameter(
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
-        // FileEntity reqEntity = new FileEntity(file,
-        // "application/octet-stream");
-
         MultipartEntity reqEntity2 = new MultipartEntity();
 
         FileBody bin = null;
@@ -201,13 +198,4 @@ public class ActionExport2Gate extends AbstractAction {
 
         
     }
-/*
-    public String parseFilePath(File file) {
-        String filePath;
-        filePath = file.toString();
-        filePath = filePath.replace("\\", "\\" + "\\");
-        return filePath;
-
-    }
-   */
 }
