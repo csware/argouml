@@ -113,9 +113,8 @@ public class ActionExport2Gate extends AbstractAction {
             upload(Main.taskID, Main.sessionID, theFile, "xmi");
             upload(Main.taskID, Main.sessionID, theFile2, "zargo");
             upload(Main.taskID, Main.sessionID, theFile3, "png");
-            giveFeedback = true;
+            giveFeedback = (Main.testID != null && !Main.testID.equals(""));
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
-            
         } catch (ClientProtocolException e1) {
             JOptionPane.showMessageDialog(null, "Upload nicht erfolgreich. Bitte nocheinmal probieren");
             LOG.error("Exception", e1);
@@ -128,8 +127,7 @@ public class ActionExport2Gate extends AbstractAction {
         }
 
         // Aufrufen des Feedbackfensters
-        
-        if (!feedbackOn){
+        if (!feedbackOn && giveFeedback){
             feedbackOn = true;
             ActionShowFeedback feedback = new ActionShowFeedback();
             feedback.showFeedback();
