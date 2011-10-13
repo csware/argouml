@@ -1,7 +1,17 @@
 package org.argouml.ui;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -86,25 +96,22 @@ public class ActionShowTask implements Runnable {
         BasicClientCookie cookie = new BasicClientCookie("JSESSIONID",
                 Main.sessionID);
 
-        // cookie.setSecure(true);
+        URL gateURL = null;
+        try {
+            gateURL = new URL(Main.servletPath);
+        } catch (MalformedURLException e) {
+        }
+
         cookie.setPath("/");
         cookie.setVersion(1);
-        //cookie.setDomain("localhost");
-        cookie.setDomain("si.in.tu-clausthal.de");
+        cookie.setDomain(gateURL.getHost());
+        if (gateURL.getProtocol().equals("https"))
+            cookie.setSecure(true);
         client.getCookieStore().addCookie(cookie);
         try {
             while (!Thread.interrupted()) {
-
-                //HttpGet post = new HttpGet(
-                  //      "http://localhost:8080/SubmissionInterface/servlets/SubmitSolution?taskid="
-                    //            + Main.taskID);
-                
-                
                 HttpGet post = new HttpGet(
-                        "http://si.in.tu-clausthal.de/umlgate/servlets/SubmitSolution?taskid="
-                                + Main.taskID);
-                
-                
+                        Main.servletPath + "/Nope");
                 HttpClient httpclient = new DefaultHttpClient();
                 httpclient.getParams().setParameter(
                         CoreProtocolPNames.PROTOCOL_VERSION,

@@ -157,6 +157,7 @@ public class Main {
     public static String taskDescription = "";
     public static String sID = null;
     public static String testID = null;
+    public static String servletPath = "http://localhost:8080/SubmissionInterface/servlets/";
 
     // Andreas: this is just temporary for the uml2 pre-alpha versions.
     private static boolean showUml2warning = true;
