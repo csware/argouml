@@ -110,9 +110,9 @@ public class ActionExport2Gate extends AbstractAction {
 
         try {
             //Hochladen
-            upload(Main.taskID, Main.sessionID, theFile.getAbsolutePath(), "xmi");
-            upload(Main.taskID, Main.sessionID, theFile2.getAbsolutePath(), "zargo");
-            upload(Main.taskID, Main.sessionID, theFile3.getAbsolutePath(), "png");
+            upload(Main.taskID, Main.sessionID, theFile, "xmi");
+            upload(Main.taskID, Main.sessionID, theFile2, "zargo");
+            upload(Main.taskID, Main.sessionID, theFile3, "png");
             giveFeedback = true;
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
             
@@ -138,7 +138,7 @@ public class ActionExport2Gate extends AbstractAction {
 
     }
 
-    public void upload(String taskID, String sessionID, String fileString, String fileExtension)
+    public void upload(String taskID, String sessionID, File file, String fileExtension)
         throws ClientProtocolException, IOException, InterruptedException {
         URL gateURL = null;
         try {
@@ -163,7 +163,7 @@ public class ActionExport2Gate extends AbstractAction {
         HttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-        File file = new File(fileString);
+
         // FileEntity reqEntity = new FileEntity(file,
         // "application/octet-stream");
 
