@@ -500,14 +500,6 @@ public class GenericArgoMenuBar extends JMenuBar implements
         //
         // edit.addSeparator();
 
-        Action removeFromDiagram = ProjectActions.getInstance()
-                .getRemoveFromDiagramAction();
-        JMenuItem removeItem = edit.add(removeFromDiagram);
-
-        setMnemonic(removeItem, "Remove from Diagram");
-        ShortcutMgr.assignAccelerator(removeItem,
-                ShortcutMgr.ACTION_REMOVE_FROM_DIAGRAM);
-
         JMenuItem deleteItem = edit.add(ActionDeleteModelElements
                 .getTargetFollower());
         setMnemonic(deleteItem, "Delete from Model");

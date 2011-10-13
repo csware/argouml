@@ -629,11 +629,11 @@ public class ShortcutMgr {
         putDefaultShortcut(ACTION_PERSPECTIVE_CONFIG, null,
                 new ActionPerspectiveConfig());
         putDefaultShortcut(ACTION_SETTINGS, null, new ActionSettings());
-        putDefaultShortcut(ACTION_REMOVE_FROM_DIAGRAM, KeyStroke.getKeyStroke(
-                KeyEvent.VK_DELETE, 0), ProjectActions.getInstance()
-                .getRemoveFromDiagramAction());
         putDefaultShortcut(ACTION_DELETE_MODEL_ELEMENTS, KeyStroke
                 .getKeyStroke(KeyEvent.VK_DELETE, DEFAULT_MASK), 
+                ActionDeleteModelElements.getTargetFollower());
+        putDefaultShortcut(ACTION_DELETE_MODEL_ELEMENTS, KeyStroke
+                .getKeyStroke(KeyEvent.VK_DELETE, 0), 
                 ActionDeleteModelElements.getTargetFollower());
 
         // view menu
