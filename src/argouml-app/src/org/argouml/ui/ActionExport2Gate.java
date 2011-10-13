@@ -3,6 +3,8 @@ package org.argouml.ui;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -105,25 +107,25 @@ public class ActionExport2Gate extends AbstractAction {
 
     public void upload(String taskID, String sessionID, String fileString, String fileExtension)
         throws ClientProtocolException, IOException, InterruptedException {
+        URL gateURL = null;
+        try {
+            gateURL = new URL(Main.servletPath);
+        } catch (MalformedURLException e) {
+        }
 
         DefaultHttpClient client = new DefaultHttpClient();
         BasicClientCookie cookie = new BasicClientCookie("JSESSIONID",
                 sessionID);
 
-        // cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setVersion(1);
-        cookie.setDomain("si.in.tu-clausthal.de");
-        //cookie.setDomain("localhost");
+        cookie.setDomain(gateURL.getHost());
+        if (gateURL.getProtocol().equals("https"))
+            cookie.setSecure(true);
         client.getCookieStore().addCookie(cookie);
 
-        //HttpPost post = new HttpPost(
-          //      "http://localhost:8080/SubmissionInterface/servlets/SubmitSolution?taskid="
-            //            + taskID);
-        
         HttpPost post = new HttpPost(
-                "http://si.in.tu-clausthal.de/umlgate/servlets/SubmitSolution?taskid="
-                        + taskID);
+                Main.servletPath + "/SubmitSolution?taskid=" + taskID);
         
         HttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(
@@ -133,7 +135,7 @@ public class ActionExport2Gate extends AbstractAction {
         // "application/octet-stream");
 
         MultipartEntity reqEntity2 = new MultipartEntity();
-        
+
         FileBody bin = new FileBody(file, "loesung."+fileExtension,
                 "text/xml", "utf-8");
 
