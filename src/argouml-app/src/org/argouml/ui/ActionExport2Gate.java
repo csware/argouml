@@ -140,7 +140,7 @@ public class ActionExport2Gate extends AbstractAction {
                 "text/xml", "utf-8");
 
         //Wichtig. Timingproblem
-        while(bin.getContentLength()==0) {
+        while(bin.getContentLength()!=file.length()) {
             Thread.sleep(100);
         }
         //FileBody bin = new FileBody(file);
