@@ -2,6 +2,8 @@ package org.argouml.ui;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,6 +28,8 @@ import org.argouml.application.Main;
 import org.argouml.i18n.Translator;
 import org.argouml.persistence.PersistenceManager;
 import org.argouml.uml.ui.ActionSaveProject;
+import org.argouml.uml.ui.SaveGraphicsManager;
+import org.tigris.gef.base.SaveGraphicsAction;
 
 
 /**
@@ -68,6 +72,15 @@ public class ActionExport2Gate extends AbstractAction {
             LOG.error("Exception", e2);
         }
 
+        File theFile3 = null;
+        try {
+            theFile3 = File.createTempFile("abcde", ".png");
+            theFile3.deleteOnExit();
+        } catch (IOException e2) {
+            // TODO: Auto-generated catch block
+            LOG.error("Exception", e2);
+        }
+
         if (theFile != null) {
             ProjectBrowser.getInstance().trySaveWithProgressMonitor(true,
                     theFile, false);
@@ -76,10 +89,30 @@ public class ActionExport2Gate extends AbstractAction {
         ProjectBrowser.getInstance().trySaveWithProgressMonitor(true, theFile2,
                 false);
 
+        // save active diagram as image
+        SaveGraphicsAction sga = SaveGraphicsManager.getInstance().getSaveActionBySuffix("png");
+        FileOutputStream fo = null;
+        try {
+            fo = new FileOutputStream(theFile3);
+        } catch (FileNotFoundException e2) {
+            LOG.error("Exception", e2);
+        }
+        sga.setStream(fo);
+        sga.setScale(1);
+        try {
+            sga.actionPerformed(null);
+        } finally {
+            try {
+                fo.close();
+            } catch (IOException e1) {
+            }
+        }
+
         try {
             //Hochladen
             upload(Main.taskID, Main.sessionID, theFile.getAbsolutePath(), "xmi");
             upload(Main.taskID, Main.sessionID, theFile2.getAbsolutePath(), "zargo");
+            upload(Main.taskID, Main.sessionID, theFile3.getAbsolutePath(), "png");
             giveFeedback = true;
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
             
@@ -136,8 +169,14 @@ public class ActionExport2Gate extends AbstractAction {
 
         MultipartEntity reqEntity2 = new MultipartEntity();
 
-        FileBody bin = new FileBody(file, "loesung."+fileExtension,
+        FileBody bin = null;
+        if (fileExtension.equals("png"))
+        {
+            bin = new FileBody(file, "loesung."+fileExtension, "image/png");
+        } else {
+            bin = new FileBody(file, "loesung."+fileExtension,
                 "text/xml", "utf-8");
+        }
 
         //Wichtig. Timingproblem
         while(bin.getContentLength()!=file.length()) {
@@ -151,7 +190,7 @@ public class ActionExport2Gate extends AbstractAction {
         HttpResponse response = client.execute(post);
         Main.sID = response.getFirstHeader("SID").getValue();
         Main.testID = response.getFirstHeader("TID").getValue();
-        
+
         HttpEntity resEntity = response.getEntity();
         System.out.println(response.getStatusLine());
         if (resEntity != null) {
