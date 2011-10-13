@@ -70,4 +70,4 @@ users@argouml.org
 dev@argouml.org 
 
 (This file was last updated by $Author: tfmorris $
-on $Date: 2007-12-20 23:53:05 +0100 (Do, 20. Dez 2007) $.)
+on $Date: 2007-12-20 23:53:05 +0100 (Do, 20 Dez 2007) $.)

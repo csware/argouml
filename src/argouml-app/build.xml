@@ -683,6 +683,17 @@ Build reports.">
         <include name="lib/commons-logging-1.0.2.jar"/>
         <include name="lib/commons-logging.LICENSE.txt"/>
         <include name="lib/gef-0.13.3.jar"/>
+      	
+      	
+      	<include name="lib/commons-codec-1.4.jar"/>
+      	<include name="lib/commons-fileupload-1.2.2.jar"/>
+      	<include name="lib/commons-logging-1.1.1.jar"/>
+      	<include name="lib/httpclient-4.1.1.jar"/>
+      	<include name="lib/httpclient-cache-4.1.1.jar"/>
+      	<include name="lib/httpcore-4.1.jar"/>
+      	<include name="lib/httpmime-4.1.1.jar"/>
+      	
+      	
         <include name="lib/gef.LICENSE.txt"/>
         <include name="lib/ocl-argo-1.1.jar"/>
         <include name="lib/ocl-argo.LICENSE.txt"/>

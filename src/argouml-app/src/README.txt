@@ -1,7 +1,7 @@
 Welcome to ArgoUML!
 
 (This file was last updated by $Author: tfmorris $ 
-on $Date: 2007-12-20 23:53:05 +0100 (Do, 20. Dez 2007) $.)
+on $Date: 2007-12-20 23:53:05 +0100 (Do, 20 Dez 2007) $.)
 
 In case you just downloaded and unzipped your ArgoUML distribution,
 here's how to proceed.

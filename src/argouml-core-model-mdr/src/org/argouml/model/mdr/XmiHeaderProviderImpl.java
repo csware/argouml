@@ -77,7 +77,7 @@ class XmiHeaderProviderImpl implements XMIHeaderProvider {
                     + ")</XMI.exporter>\n"
             + "      <XMI.exporterVersion>" + version
                     + " revised on "
-                    + "$Date: 2010-01-11 22:20:14 +0100 (Mo, 11. Jan 2010) $ "
+                    + "$Date: 2010-01-11 22:20:14 +0100 (Mo, 11 Jan 2010) $ "
                     + "</XMI.exporterVersion>\n"
             + "    </XMI.documentation>\n"
             + "    <XMI.metamodel xmi.name=\"UML\" xmi.version=\""

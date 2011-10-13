@@ -65,6 +65,7 @@ import org.argouml.ui.ActionExportXMI;
 import org.argouml.ui.ActionImportXMI;
 import org.argouml.ui.ActionProjectSettings;
 import org.argouml.ui.ActionSettings;
+import org.argouml.ui.ActionShowFeedback;
 import org.argouml.ui.ProjectActions;
 import org.argouml.ui.ProjectBrowser;
 import org.argouml.ui.explorer.ActionPerspectiveConfig;
@@ -91,6 +92,8 @@ import org.tigris.gef.base.AlignAction;
 import org.tigris.gef.base.DistributeAction;
 import org.tigris.gef.base.ReorderAction;
 import org.tigris.gef.base.ZoomAction;
+
+import org.argouml.ui.ActionExport2Gate;
 
 /**
  * This class manages all Argo's shortcuts
@@ -157,6 +160,12 @@ public class ShortcutMgr {
 
     /** Action key for export xmi */
     public static final String ACTION_EXPORT_XMI = "exportXmi";
+    
+    /** Action key for export2Gate */
+    public static final String ACTION_GATE_EXPORT = "exportXmi";
+    
+    /** Action key for getting feedback */
+    public static final String ACTION_GATE_FEEDBACK = "gateFeedback";
 
     /** Action key for import from sources */
     public static final String ACTION_IMPORT_FROM_SOURCES = "importFromSources";
@@ -579,6 +588,17 @@ public class ShortcutMgr {
                 new ActionRevertToSaved());
         putDefaultShortcut(ACTION_IMPORT_XMI, null, new ActionImportXMI());
         putDefaultShortcut(ACTION_EXPORT_XMI, null, new ActionExportXMI());
+        
+        
+        
+        //Export2Gate + Feedback im Shortcut Manager registrieren
+        putDefaultShortcut(ACTION_GATE_EXPORT, null, new ActionExport2Gate());
+        
+        //putDefaultShortcut(ACTION_GATE_FEEDBACK, null, new ActionShowFeedback());
+        
+        
+        
+        
         putDefaultShortcut(ACTION_IMPORT_FROM_SOURCES, null,
                 ActionImportFromSources.getInstance());
         putDefaultShortcut(ACTION_PROJECT_SETTINGS, null,

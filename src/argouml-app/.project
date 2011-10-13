@@ -24,13 +24,23 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>de.mvmsoft.checkclipse.CheckclipseBuilder</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/de.mvmsoft.checkclipse.CheckclipseBuilder (2).launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>net.sf.eclipsecs.core.CheckstyleBuilder</name>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder (2).launch</value>
+				</dictionary>
 			</arguments>
 		</buildCommand>
 	</buildSpec>

@@ -166,7 +166,7 @@ public interface XmiReader {
      *     ArgoUML (using Netbeans XMI Writer version 1.0)
      *   &lt;/XMI.exporter&gt;
      *   &lt;XMI.exporterVersion&gt;
-     *     1.4 revised on $Date: 2010-01-10 22:16:51 +0100 (So, 10. Jan 2010) $
+     *     1.4 revised on $Date: 2010-01-10 22:16:51 +0100 (So, 10 Jan 2010) $
      *   &lt;/XMI.exporterVersion&gt;
      * &lt;/XMI.documentation&gt;
      * &lt;XMI.metamodel xmi.name = 'UML' xmi.version = '1.4'/&gt;

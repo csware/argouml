@@ -86,6 +86,7 @@ import org.argouml.notation.providers.uml.InitNotationUml;
 import org.argouml.notation.ui.InitNotationUI;
 import org.argouml.persistence.PersistenceManager;
 import org.argouml.profile.init.InitProfileSubsystem;
+import org.argouml.ui.ActionShowFeedback;
 import org.argouml.ui.LookAndFeelMgr;
 import org.argouml.ui.ProjectBrowser;
 import org.argouml.ui.SplashScreen;
@@ -105,6 +106,8 @@ import org.argouml.util.JavaRuntimeUtility;
 import org.argouml.util.logging.AwtExceptionHandler;
 import org.argouml.util.logging.SimpleTimer;
 import org.tigris.gef.util.Util;
+
+import org.argouml.ui.ActionShowTask;
 
 /**
  * This is the main class for two of the types 
@@ -147,6 +150,13 @@ public class Main {
     private static String projectName = null;
 
     private static String theTheme;
+    
+    //Variablen für Gateinformationen
+    public static String taskID = null;
+    public static String sessionID = null;
+    public static String taskDescription = "";
+    public static String sID = null;
+    public static String testID = null;
 
     // Andreas: this is just temporary for the uml2 pre-alpha versions.
     private static boolean showUml2warning = true;
@@ -166,6 +176,12 @@ public class Main {
 
             st.mark("arguments");
             parseCommandLine(args);
+            
+            //Aufrufen der Aufgabenstellung
+            ActionShowTask task = new ActionShowTask();
+            task.showTask();
+            
+            
 
             // Register our last chance exception handler
             AwtExceptionHandler.registerExceptionHandler();
@@ -365,6 +381,17 @@ public class Main {
                     doSplash = false;
                 } else if (args[i].equalsIgnoreCase("-norecentfile")) {
                     reloadRecent = false;
+                
+                //Gateinformationen über Parameter der JNLP in Variablen schreiben
+                } else if (args[i].equalsIgnoreCase("-taskid")) {
+                    taskID = args[i+1];
+                                        
+                } else if (args[i].equalsIgnoreCase("-taskDescription")) {
+                    taskDescription = args[i+1];
+                                       
+                } else if (args[i].equalsIgnoreCase("-sessionid")) {
+                    sessionID = args[i+1];
+                
                 } else if (args[i].equalsIgnoreCase("-command")
                         && i + 1 < args.length) {
                     commands.add(args[i + 1]);

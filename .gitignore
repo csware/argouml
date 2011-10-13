@@ -1,0 +1,5 @@
+/src/argouml-build
+/src/argouml-app/argouml.log
+build/
+build-eclipse/
+build-eclipse-tests/

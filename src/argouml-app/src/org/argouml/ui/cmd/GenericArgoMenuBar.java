@@ -66,6 +66,7 @@ import org.argouml.ui.ActionExportXMI;
 import org.argouml.ui.ActionImportXMI;
 import org.argouml.ui.ActionProjectSettings;
 import org.argouml.ui.ActionSettings;
+import org.argouml.ui.ActionShowFeedback;
 import org.argouml.ui.ArgoJMenu;
 import org.argouml.ui.ArgoToolbarManager;
 import org.argouml.ui.ProjectActions;
@@ -101,6 +102,7 @@ import org.tigris.gef.base.DistributeAction;
 import org.tigris.gef.base.ReorderAction;
 import org.tigris.toolbar.ToolBarFactory;
 
+import org.argouml.ui.ActionExport2Gate;
 /**
  * GenericArgoMenuBar defines the menu bar for all operating systems which do 
  * not explicitly ask for a different kind of menu bar, such as Mac OS X.
@@ -367,6 +369,15 @@ public class GenericArgoMenuBar extends JMenuBar implements
                 ShortcutMgr.ACTION_IMPORT_XMI);
         ShortcutMgr.assignAccelerator(file.add(new ActionExportXMI()),
                 ShortcutMgr.ACTION_EXPORT_XMI);
+        
+        
+        //ActionExport2Gate + Feedback in der Menubar registrieren
+        ShortcutMgr.assignAccelerator(file.add(new ActionExport2Gate()),
+                ShortcutMgr.ACTION_GATE_EXPORT);
+        /*
+        ShortcutMgr.assignAccelerator(file.add(new ActionShowFeedback()),
+                ShortcutMgr.ACTION_GATE_FEEDBACK);
+        */
 
         JMenuItem importFromSources = file.add(ActionImportFromSources
                 .getInstance());
