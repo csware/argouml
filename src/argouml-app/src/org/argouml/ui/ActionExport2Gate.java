@@ -56,7 +56,7 @@ public class ActionExport2Gate extends AbstractAction {
         //Zwei Tempdateien erzeugen und lokal speichern
         File theFile2 = null;
         try {
-            theFile2 = File.createTempFile("abc", ".zargo");
+            theFile2 = File.createTempFile("argoumlloesung", ".zargo");
             theFile2.deleteOnExit();
         } catch (IOException e2) {
             // TODO: Auto-generated catch block
@@ -65,7 +65,7 @@ public class ActionExport2Gate extends AbstractAction {
         
         File theFile = null;
         try {
-            theFile = File.createTempFile("abcde", ".xmi");
+            theFile = File.createTempFile("argoumlloesung", ".xmi");
             theFile.deleteOnExit();
         } catch (IOException e2) {
             // TODO: Auto-generated catch block
@@ -74,7 +74,7 @@ public class ActionExport2Gate extends AbstractAction {
 
         File theFile3 = null;
         try {
-            theFile3 = File.createTempFile("abcde", ".png");
+            theFile3 = File.createTempFile("argoumlloesung", ".png");
             theFile3.deleteOnExit();
         } catch (IOException e2) {
             // TODO: Auto-generated catch block
