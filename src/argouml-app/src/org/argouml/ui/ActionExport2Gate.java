@@ -31,18 +31,19 @@ import org.argouml.uml.ui.ActionSaveProject;
 import org.argouml.uml.ui.SaveGraphicsManager;
 import org.tigris.gef.base.SaveGraphicsAction;
 
-
 /**
  * Klasse zum Hochladen einer XMI und ZARGO Datei ins GATE - System
+ * 
  * @author Joachim Schramm
- *
+ * 
  */
 public class ActionExport2Gate extends AbstractAction {
 
     private static final Logger LOG = Logger.getLogger(ActionSaveProject.class);
-    
-    //Singleton
+
+    // Singleton
     private boolean feedbackOn = false;
+
     public static boolean giveFeedback = false;
 
     public ActionExport2Gate() {
@@ -53,7 +54,7 @@ public class ActionExport2Gate extends AbstractAction {
 
         PersistenceManager pm = PersistenceManager.getInstance();
 
-        //Zwei Tempdateien erzeugen und lokal speichern
+        // Zwei Tempdateien erzeugen und lokal speichern
         File theFile2 = null;
         try {
             theFile2 = File.createTempFile("argoumlloesung", ".zargo");
@@ -62,7 +63,7 @@ public class ActionExport2Gate extends AbstractAction {
             // TODO: Auto-generated catch block
             LOG.error("Exception", e2);
         }
-        
+
         File theFile = null;
         try {
             theFile = File.createTempFile("argoumlloesung", ".xmi");
@@ -90,7 +91,8 @@ public class ActionExport2Gate extends AbstractAction {
                 false);
 
         // save active diagram as image
-        SaveGraphicsAction sga = SaveGraphicsManager.getInstance().getSaveActionBySuffix("png");
+        SaveGraphicsAction sga = SaveGraphicsManager.getInstance()
+                .getSaveActionBySuffix("png");
         FileOutputStream fo = null;
         try {
             fo = new FileOutputStream(theFile3);
@@ -109,35 +111,38 @@ public class ActionExport2Gate extends AbstractAction {
         }
 
         try {
-            //Hochladen
+            // Hochladen
             upload(Main.taskID, Main.sessionID, theFile, "xmi");
             upload(Main.taskID, Main.sessionID, theFile2, "zargo");
             upload(Main.taskID, Main.sessionID, theFile3, "png");
             giveFeedback = (Main.testID != null && !Main.testID.equals(""));
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
         } catch (ClientProtocolException e1) {
-            JOptionPane.showMessageDialog(null, "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+            JOptionPane.showMessageDialog(null,
+                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
             LOG.error("Exception", e1);
         } catch (IOException e1) {
-            JOptionPane.showMessageDialog(null, "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+            JOptionPane.showMessageDialog(null,
+                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
             LOG.error("Exception", e1);
         } catch (InterruptedException e1) {
-            JOptionPane.showMessageDialog(null, "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+            JOptionPane.showMessageDialog(null,
+                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
             LOG.error("Exception", e1);
         }
 
         // Aufrufen des Feedbackfensters
-        if (!feedbackOn && giveFeedback){
+        if (!feedbackOn && giveFeedback) {
             feedbackOn = true;
             ActionShowFeedback feedback = new ActionShowFeedback();
             feedback.showFeedback();
         }
-        
 
     }
 
-    public void upload(String taskID, String sessionID, File file, String fileExtension)
-        throws ClientProtocolException, IOException, InterruptedException {
+    public void upload(String taskID, String sessionID, File file,
+            String fileExtension) throws ClientProtocolException, IOException,
+        InterruptedException {
         URL gateURL = null;
         try {
             gateURL = new URL(Main.servletPath);
@@ -151,13 +156,12 @@ public class ActionExport2Gate extends AbstractAction {
         cookie.setPath("/");
         cookie.setVersion(1);
         cookie.setDomain(gateURL.getHost());
-        if (gateURL.getProtocol().equals("https"))
-            cookie.setSecure(true);
+        if (gateURL.getProtocol().equals("https")) cookie.setSecure(true);
         client.getCookieStore().addCookie(cookie);
 
-        HttpPost post = new HttpPost(
-                Main.servletPath + "/SubmitSolution?taskid=" + taskID);
-        
+        HttpPost post = new HttpPost(Main.servletPath
+                + "/SubmitSolution?taskid=" + taskID);
+
         HttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -165,26 +169,30 @@ public class ActionExport2Gate extends AbstractAction {
         MultipartEntity reqEntity2 = new MultipartEntity();
 
         FileBody bin = null;
-        if (fileExtension.equals("png"))
-        {
-            bin = new FileBody(file, "loesung."+fileExtension, "image/png");
+        if (fileExtension.equals("png")) {
+            bin = new FileBody(file, "loesung." + fileExtension, "image/png", "utf-8");
         } else {
-            bin = new FileBody(file, "loesung."+fileExtension,
-                "text/xml", "utf-8");
+            bin = new FileBody(file, "loesung." + fileExtension, "text/xml",
+                    "utf-8");
         }
 
-        //Wichtig. Timingproblem
-        while(bin.getContentLength()!=file.length()) {
+        // Wichtig. Timingproblem
+        while (bin.getContentLength() != file.length()) {
             Thread.sleep(100);
         }
-        //FileBody bin = new FileBody(file);
+        // FileBody bin = new FileBody(file);
         reqEntity2.addPart("file", bin);
 
         post.setEntity(reqEntity2);
         System.out.println("executing request " + post.getRequestLine());
         HttpResponse response = client.execute(post);
-        Main.sID = response.getFirstHeader("SID").getValue();
-        Main.testID = response.getFirstHeader("TID").getValue();
+        if (response.getFirstHeader("SID") != null) {
+            Main.sID = response.getFirstHeader("SID").getValue();
+        } else {
+            throw new IOException("got no SID");
+        }
+        if (response.getFirstHeader("TID") != null)
+            Main.testID = response.getFirstHeader("TID").getValue();
 
         HttpEntity resEntity = response.getEntity();
         System.out.println(response.getStatusLine());
@@ -196,6 +204,5 @@ public class ActionExport2Gate extends AbstractAction {
         }
         httpclient.getConnectionManager().shutdown();
 
-        
     }
 }
