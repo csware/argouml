@@ -154,7 +154,6 @@ public class Main {
     //Variablen für Gateinformationen
     public static String taskID = null;
     public static String sessionID = null;
-    public static String taskDescription = "";
     public static String sID = null;
     public static String testID = null;
     public static String servletPath = "http://localhost:8080/SubmissionInterface/servlets";
@@ -384,10 +383,6 @@ public class Main {
                 //Gateinformationen über Parameter der JNLP in Variablen schreiben
                 } else if (args[i].equalsIgnoreCase("-taskid")) {
                     taskID = args[i+1];
-                                        
-                } else if (args[i].equalsIgnoreCase("-taskDescription")) {
-                    taskDescription = args[i+1];
-                                       
                 } else if (args[i].equalsIgnoreCase("-sessionid")) {
                     sessionID = args[i+1];
                 
