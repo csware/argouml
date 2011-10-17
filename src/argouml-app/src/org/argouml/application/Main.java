@@ -177,12 +177,6 @@ public class Main {
 
             st.mark("arguments");
             parseCommandLine(args);
-            
-            //Aufrufen der Aufgabenstellung
-            ActionShowTask task = new ActionShowTask();
-            task.showTask();
-            
-            
 
             // Register our last chance exception handler
             AwtExceptionHandler.registerExceptionHandler();
@@ -246,6 +240,10 @@ public class Main {
                 splash.dispose();
                 splash = null;
             }
+
+            //Aufrufen der Aufgabenstellung
+            ActionShowTask task = new ActionShowTask();
+            task.showTask();
 
             performCommands(commands);
             commands = null;
