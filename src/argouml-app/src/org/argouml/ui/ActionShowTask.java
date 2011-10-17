@@ -23,6 +23,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
@@ -31,7 +32,6 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
 import org.argouml.application.Main;
-import org.argouml.ui.targetmanager.TargetManager;
 
 /**
  * Klasse zum Anzeigen der Aufgabenstellung
@@ -121,7 +121,7 @@ public class ActionShowTask implements Runnable {
         }
     }
 
-    private Cookie setUpCookie() {
+    static private Cookie setUpCookie() {
         BasicClientCookie cookie = new BasicClientCookie("JSESSIONID",
                 Main.sessionID);
         cookie.setPath("/");
@@ -131,7 +131,7 @@ public class ActionShowTask implements Runnable {
         return cookie;
     }
 
-    public URL getGATEUrl() {
+    static public URL getGATEUrl() {
         URL gateURL = null;
         try {
             gateURL = new URL(Main.servletPath);
@@ -140,7 +140,7 @@ public class ActionShowTask implements Runnable {
         return gateURL;
     }
 
-    public String retrieve(String servlet) {
+    public static HttpEntity retrieveEntity(String servlet) {
         DefaultHttpClient client = new DefaultHttpClient();
 
         client.getCookieStore().addCookie(setUpCookie());
@@ -153,13 +153,24 @@ public class ActionShowTask implements Runnable {
             HttpResponse response = client.execute(get);
             HttpEntity resEntity = response.getEntity();
             //System.out.println(response.getStatusLine());
-            if (resEntity != null) {
-                String result = EntityUtils.toString(resEntity);
-                resEntity.consumeContent();
-                return result;
-            }
+            return resEntity;
         } catch (Exception e) {
         }
-        return "";
+        return null;
+    }
+
+    public static String retrieve(String servlet) {
+        HttpEntity resEntity = retrieveEntity(servlet);
+        if (resEntity != null) {
+            String result = "";
+            try {
+                result = EntityUtils.toString(resEntity);
+            } catch (ParseException e) {
+            } catch (IOException e) {
+            }
+            return result;
+        } else {
+            return "";
+        }
     }
 }

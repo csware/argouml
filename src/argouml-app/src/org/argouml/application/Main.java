@@ -383,6 +383,26 @@ public class Main {
                 //Gateinformationen über Parameter der JNLP in Variablen schreiben
                 } else if (args[i].equalsIgnoreCase("-taskid")) {
                     taskID = args[i+1];
+                } else if (args[i].equalsIgnoreCase("-submissionid")) {
+                    sID = args[i + 1];
+                    // download latest file
+                    HttpEntity result = ActionShowTask
+                            .retrieveEntity("/ShowFile/loesung.zargo?sid="
+                                    + sID);
+                    // open file
+                    if (result != null) {
+                        File tmpFile;
+                        try {
+                            tmpFile = File.createTempFile("argoumlloesung",
+                                    ".zargo");
+                            tmpFile.deleteOnExit();
+                            FileOutputStream os = new FileOutputStream(tmpFile);
+                            result.writeTo(os);
+                            os.close();
+                            projectName = tmpFile.getAbsolutePath();
+                        } catch (IOException e) {
+                        }
+                    }
                 } else if (args[i].equalsIgnoreCase("-sessionid")) {
                     sessionID = args[i+1];
                 

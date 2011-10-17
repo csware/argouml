@@ -203,6 +203,5 @@ public class ActionExport2Gate extends AbstractAction {
             resEntity.consumeContent();
         }
         httpclient.getConnectionManager().shutdown();
-
     }
 }
