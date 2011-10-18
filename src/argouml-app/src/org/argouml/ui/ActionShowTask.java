@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,18 +18,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.util.EntityUtils;
 import org.argouml.application.Main;
+import org.argouml.util.GATEHelper;
 
 /**
  * Klasse zum Anzeigen der Aufgabenstellung
@@ -56,7 +44,6 @@ public class ActionShowTask implements Runnable {
         DisplayMode dm = gd.getDisplayMode();
         // Fenster erzeugen
         JFrame workWindows = new JFrame("Aufgabenstellung");
-
         workWindows.setLayout(new BorderLayout());
 
         JButton uploadToGate = new JButton("Export2GATE");
@@ -70,7 +57,7 @@ public class ActionShowTask implements Runnable {
         JTextPane aufgabenstellungPane = new JTextPane();
 
         HTMLDocument f = new HTMLDocument();
-        StringReader reader = new StringReader(retrieve("/ShowTask?onlydescription=true&taskid="+ Main.taskID));
+        StringReader reader = new StringReader(GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid="+ Main.taskID));
         try {
             new HTMLEditorKit().read(reader, f, 0);
         } catch(IOException ioe) {
@@ -105,12 +92,9 @@ public class ActionShowTask implements Runnable {
 
     // Dummythread: Ständige Anfrage an Server, um das Ausloggen zu verhindern
     public void run() {
-        DefaultHttpClient client = new DefaultHttpClient();
-
-        client.getCookieStore().addCookie(setUpCookie());
         try {
             while (!Thread.interrupted()) {
-                retrieve("/Nope");
+                GATEHelper.retrieve("/Nope");
                 try {
                     Thread.sleep(60000);
                 } catch (InterruptedException e1) {
@@ -118,59 +102,6 @@ public class ActionShowTask implements Runnable {
                 }
             }
         } catch (Exception e) {
-        }
-    }
-
-    static private Cookie setUpCookie() {
-        BasicClientCookie cookie = new BasicClientCookie("JSESSIONID",
-                Main.sessionID);
-        cookie.setPath("/");
-        cookie.setVersion(1);
-        cookie.setDomain(getGATEUrl().getHost());
-        if (getGATEUrl().getProtocol().equals("https")) cookie.setSecure(true);
-        return cookie;
-    }
-
-    static public URL getGATEUrl() {
-        URL gateURL = null;
-        try {
-            gateURL = new URL(Main.servletPath);
-        } catch (MalformedURLException e) {
-        }
-        return gateURL;
-    }
-
-    public static HttpEntity retrieveEntity(String servlet) {
-        DefaultHttpClient client = new DefaultHttpClient();
-
-        client.getCookieStore().addCookie(setUpCookie());
-        try {
-            HttpGet get = new HttpGet(Main.servletPath + servlet);
-            HttpClient httpclient = new DefaultHttpClient();
-            httpclient.getParams().setParameter(
-                    CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-            System.out.println("executing request " + get.getRequestLine());
-            HttpResponse response = client.execute(get);
-            HttpEntity resEntity = response.getEntity();
-            //System.out.println(response.getStatusLine());
-            return resEntity;
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    public static String retrieve(String servlet) {
-        HttpEntity resEntity = retrieveEntity(servlet);
-        if (resEntity != null) {
-            String result = "";
-            try {
-                result = EntityUtils.toString(resEntity);
-            } catch (ParseException e) {
-            } catch (IOException e) {
-            }
-            return result;
-        } else {
-            return "";
         }
     }
 }

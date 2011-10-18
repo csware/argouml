@@ -45,6 +45,7 @@ import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -61,6 +62,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
+import org.apache.http.HttpEntity;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -86,7 +88,7 @@ import org.argouml.notation.providers.uml.InitNotationUml;
 import org.argouml.notation.ui.InitNotationUI;
 import org.argouml.persistence.PersistenceManager;
 import org.argouml.profile.init.InitProfileSubsystem;
-import org.argouml.ui.ActionShowFeedback;
+import org.argouml.ui.ActionShowTask;
 import org.argouml.ui.LookAndFeelMgr;
 import org.argouml.ui.ProjectBrowser;
 import org.argouml.ui.SplashScreen;
@@ -102,12 +104,11 @@ import org.argouml.uml.diagram.ui.InitDiagramAppearanceUI;
 import org.argouml.uml.diagram.use_case.ui.InitUseCaseDiagram;
 import org.argouml.uml.ui.InitUmlUI;
 import org.argouml.util.ArgoFrame;
+import org.argouml.util.GATEHelper;
 import org.argouml.util.JavaRuntimeUtility;
 import org.argouml.util.logging.AwtExceptionHandler;
 import org.argouml.util.logging.SimpleTimer;
 import org.tigris.gef.util.Util;
-
-import org.argouml.ui.ActionShowTask;
 
 /**
  * This is the main class for two of the types 
@@ -386,8 +387,7 @@ public class Main {
                 } else if (args[i].equalsIgnoreCase("-submissionid")) {
                     sID = args[i + 1];
                     // download latest file
-                    HttpEntity result = ActionShowTask
-                            .retrieveEntity("/ShowFile/loesung.zargo?sid="
+                    HttpEntity result = GATEHelper.retrieveEntity("/ShowFile/loesung.zargo?sid="
                                     + sID);
                     // open file
                     if (result != null) {
