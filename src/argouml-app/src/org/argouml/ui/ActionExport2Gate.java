@@ -107,15 +107,15 @@ public class ActionExport2Gate extends AbstractAction {
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
         } catch (ClientProtocolException e1) {
             JOptionPane.showMessageDialog(null,
-                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+                    "Upload nicht erfolgreich. Bitte noch einmal probieren");
             LOG.error("Exception", e1);
         } catch (IOException e1) {
             JOptionPane.showMessageDialog(null,
-                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+                    "Upload nicht erfolgreich. Bitte noch einmal probieren");
             LOG.error("Exception", e1);
         } catch (InterruptedException e1) {
             JOptionPane.showMessageDialog(null,
-                    "Upload nicht erfolgreich. Bitte nocheinmal probieren");
+                    "Upload nicht erfolgreich. Bitte noch einmal probieren");
             LOG.error("Exception", e1);
         }
 
