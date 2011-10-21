@@ -57,11 +57,13 @@ public class ActionShowTask implements Runnable {
         JTextPane aufgabenstellungPane = new JTextPane();
 
         HTMLDocument f = new HTMLDocument();
-        StringReader reader = new StringReader(GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid="+ Main.taskID));
+        StringReader reader = new StringReader(
+                GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid="
+                        + Main.taskID));
         try {
             new HTMLEditorKit().read(reader, f, 0);
-        } catch(IOException ioe) {
-        } catch(BadLocationException ble) {
+        } catch (IOException ioe) {
+        } catch (BadLocationException ble) {
         }
 
         aufgabenstellungPane.setContentType("text/html");
