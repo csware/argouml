@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -17,6 +19,7 @@ import org.argouml.persistence.PersistenceManager;
 import org.argouml.uml.ui.ActionSaveProject;
 import org.argouml.uml.ui.SaveGraphicsManager;
 import org.argouml.util.GATEHelper;
+import org.argouml.util.GATEPartnerSelectionDialog;
 import org.tigris.gef.base.SaveGraphicsAction;
 
 /**
@@ -41,6 +44,14 @@ public class ActionExport2Gate extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         PersistenceManager pm = PersistenceManager.getInstance();
+
+        List<Integer> selectedPartners = new LinkedList<Integer>();
+
+        if (Main.sID == null) {
+            GATEPartnerSelectionDialog psf = new GATEPartnerSelectionDialog();
+            if (psf.success == false) return;
+            selectedPartners = psf.selectedPartners;
+        }
 
         // Zwei Tempdateien erzeugen und lokal speichern
         File theFile2 = null;
@@ -100,9 +111,12 @@ public class ActionExport2Gate extends AbstractAction {
 
         try {
             // Hochladen
-            GATEHelper.upload(Main.taskID, Main.sessionID, theFile, "xmi");
-            GATEHelper.upload(Main.taskID, Main.sessionID, theFile2, "zargo");
-            GATEHelper.upload(Main.taskID, Main.sessionID, theFile3, "png");
+            GATEHelper.upload(Main.taskID, Main.sessionID, theFile, "xmi",
+                    selectedPartners);
+            GATEHelper.upload(Main.taskID, Main.sessionID, theFile2, "zargo",
+                    new LinkedList<Integer>());
+            GATEHelper.upload(Main.taskID, Main.sessionID, theFile3, "png",
+                    new LinkedList<Integer>());
             giveFeedback = (Main.testID != null && !Main.testID.equals(""));
             JOptionPane.showMessageDialog(null, "Upload erfolgreich");
         } catch (ClientProtocolException e1) {
