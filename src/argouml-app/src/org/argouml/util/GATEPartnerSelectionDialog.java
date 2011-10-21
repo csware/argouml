@@ -58,9 +58,11 @@ public class GATEPartnerSelectionDialog extends ArgoDialog {
 
             public void actionPerformed(ActionEvent e) {
                 selectedPartners.clear();
-                for (int i = 0; i < partnerComboBoxes.length; i++) {
-                    if (partnerComboBoxes[i].getSelectedItem() != null) {
-                        selectedPartners.add(((PossiblePartner)partnerComboBoxes[i].getSelectedItem()).getId());
+                if (partnerComboBoxes != null) {
+                    for (int i = 0; i < partnerComboBoxes.length; i++) {
+                        if (partnerComboBoxes[i].getSelectedItem() != null) {
+                            selectedPartners.add(((PossiblePartner)partnerComboBoxes[i].getSelectedItem()).getId());
+                        }
                     }
                 }
                 success = true;
