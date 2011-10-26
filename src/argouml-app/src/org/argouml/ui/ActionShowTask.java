@@ -29,9 +29,7 @@ import org.argouml.util.GATEHelper;
  */
 public class ActionShowTask implements Runnable {
 
-    public ActionShowTask() {
-
-    }
+    public static String taskDescription = "";
 
     public void showTask() {
         // Dummythread starten
@@ -57,9 +55,7 @@ public class ActionShowTask implements Runnable {
         JTextPane aufgabenstellungPane = new JTextPane();
 
         HTMLDocument f = new HTMLDocument();
-        StringReader reader = new StringReader(
-                GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid="
-                        + Main.taskID));
+        StringReader reader = new StringReader(taskDescription);
         try {
             new HTMLEditorKit().read(reader, f, 0);
         } catch (IOException ioe) {

@@ -382,32 +382,13 @@ public class Main {
                     doSplash = false;
                 } else if (args[i].equalsIgnoreCase("-norecentfile")) {
                     reloadRecent = false;
-                
-                //Gateinformationen über Parameter der JNLP in Variablen schreiben
-                } else if (args[i].equalsIgnoreCase("-taskid")) {
-                    taskID = args[i+1];
-                } else if (args[i].equalsIgnoreCase("-submissionid")) {
-                    sID = args[i + 1];
-                    // download latest file
-                    HttpEntity result = GATEHelper.retrieveEntity("/ShowFile/loesung.zargo?sid="
-                                    + sID);
-                    // open file
-                    if (result != null) {
-                        File tmpFile;
-                        try {
-                            tmpFile = File.createTempFile("argoumlloesung",
-                                    ".zargo");
-                            tmpFile.deleteOnExit();
-                            FileOutputStream os = new FileOutputStream(tmpFile);
-                            result.writeTo(os);
-                            os.close();
-                            projectName = tmpFile.getAbsolutePath();
-                        } catch (IOException e) {
-                        }
-                    }
-                } else if (args[i].equalsIgnoreCase("-sessionid")) {
-                    sessionID = args[i+1];
-                
+
+                    // Gateinformationen über Parameter der JNLP in Variablen
+                    // schreiben
+                } else if (args[i].equalsIgnoreCase("-taskid") && i + 1 < args.length) {
+                    taskID = args[++i];
+                } else if (args[i].equalsIgnoreCase("-sessionid") && i + 1 < args.length) {
+                    sessionID = args[++i];
                 } else if (args[i].equalsIgnoreCase("-srvpath") && i + 1 < args.length) {
                     servletPath = args[++i];
                 } else if (args[i].equalsIgnoreCase("-command")
@@ -452,8 +433,38 @@ public class Main {
                 }
             }
         }
+        firstGATEDownload();
     }
 
+    private static void firstGATEDownload() {
+        if (sessionID == null || taskID == null) return;
+        ActionShowTask.taskDescription = GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid="
+                + Main.taskID);
+        if (ActionShowTask.taskDescription == "") {
+            JOptionPane.showMessageDialog(null, "Verbindungsaufbau zum Server fehlgeschlagen.\nBitte erneut probieren oder E-Mail an sven.strickroth@tu-clausthal.de.");
+            Main.taskID = null;
+        }
+        if (sID != null) {
+            // download latest file
+            HttpEntity result = GATEHelper
+                    .retrieveEntity("/ShowFile/loesung.zargo?sid="
+                        + sID);
+            // open file
+            if (result != null) {
+                File tmpFile;
+                try {
+                    tmpFile = File.createTempFile("argoumlloesung",
+                            ".zargo");
+                    tmpFile.deleteOnExit();
+                    FileOutputStream os = new FileOutputStream(tmpFile);
+                    result.writeTo(os);
+                    os.close();
+                    projectName = tmpFile.getAbsolutePath();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
 
     private static ProjectBrowser initializeSubsystems(SimpleTimer st,
             SplashScreen splash) {
