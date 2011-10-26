@@ -406,6 +406,8 @@ public class Main {
                 } else if (args[i].equalsIgnoreCase("-sessionid")) {
                     sessionID = args[i+1];
                 
+                } else if (args[i].equalsIgnoreCase("-srvpath") && i + 1 < args.length) {
+                    servletPath = args[++i];
                 } else if (args[i].equalsIgnoreCase("-command")
                         && i + 1 < args.length) {
                     commands.add(args[i + 1]);
