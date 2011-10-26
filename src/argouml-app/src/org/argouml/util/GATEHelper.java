@@ -56,6 +56,9 @@ public class GATEHelper {
                     CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             System.out.println("executing request " + get.getRequestLine());
             HttpResponse response = client.execute(get);
+            if (response.getFirstHeader("LoggedIn") != null) {
+                return null;
+            }
             HttpEntity resEntity = response.getEntity();
             //System.out.println(response.getStatusLine());
             return resEntity;
