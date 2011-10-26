@@ -30,14 +30,12 @@ import org.tigris.gef.base.SaveGraphicsAction;
  * Klasse zum Hochladen einer XMI und ZARGO Datei ins GATE - System
  * 
  * @author Joachim Schramm
- * 
  */
 public class ActionExport2Gate extends AbstractAction {
 
     private static final Logger LOG = Logger.getLogger(ActionSaveProject.class);
 
-    // Singleton
-    private boolean feedbackOn = false;
+    private static boolean feedbackOn = false;
 
     public static boolean giveFeedback = false;
 
