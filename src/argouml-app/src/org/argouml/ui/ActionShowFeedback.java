@@ -1,21 +1,21 @@
 package org.argouml.ui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.util.EntityUtils;
 import org.argouml.application.Main;
+import org.argouml.util.GATEHelper;
 
 /**
  * Klasse zum Anzeigen des Feedbacks
@@ -23,11 +23,6 @@ import org.argouml.application.Main;
  *
  */
 public class ActionShowFeedback {
-
-    public ActionShowFeedback() {
-
-    }
-
     public void showFeedback() {
         //Windows Auflösung erkennen
         GraphicsEnvironment env = GraphicsEnvironment
@@ -64,47 +59,7 @@ public class ActionShowFeedback {
                 if (e.getActionCommand().equals("Feedback")) {
                     if(ActionExport2Gate.giveFeedback){
                         ActionExport2Gate.giveFeedback = false;
-                        DefaultHttpClient client = new DefaultHttpClient();
-                        BasicClientCookie cookie = new BasicClientCookie(
-                                "JSESSIONID", Main.sessionID);
-
-                        // cookie.setSecure(true);
-                        cookie.setPath("/");
-                        cookie.setVersion(1);
-                        //cookie.setDomain("localhost");
-                        cookie.setDomain("si.in.tu-clausthal.de");
-                        client.getCookieStore().addCookie(cookie);
-                        
-                        try {
-                            
-                            //HttpGet post = new HttpGet(
-                              //      "http://localhost:8080/SubmissionInterface/servlets/PerformTest?sid="+Main.sID+"&testid="+Main.testID);
-                            
-                            HttpGet post = new HttpGet(
-                                    "http://si.in.tu-clausthal.de/umlgate/servlets/PerformTest?sid="+Main.sID+"&testid="+Main.testID);
-                            
-                            HttpClient httpclient = new DefaultHttpClient();
-                            httpclient.getParams().setParameter(
-                                    CoreProtocolPNames.PROTOCOL_VERSION,
-                                    HttpVersion.HTTP_1_1);
-                            
-                            HttpResponse response = client.execute(post);
-                            HttpEntity resEntity = response.getEntity();
-                            System.out.println(response.getStatusLine());
-                            if (resEntity != null) {
-                                label.setText(EntityUtils.toString(resEntity));
-                            }
-                            if (resEntity != null) {
-                                resEntity.consumeContent();
-                            }
-                            try {
-                                Thread.sleep(1000*2);
-                            } catch (InterruptedException e1) {
-                                Thread.interrupted();
-                            }
-
-                        } catch (Exception e1) {
-                        }
+                        label.setText(GATEHelper.retrieve("/PerformTest?sid="+Main.sID+"&testid="+Main.testID));
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Bitte erst Export2Gate ausführen");
@@ -116,7 +71,5 @@ public class ActionShowFeedback {
         button.addActionListener(al);
         workWindows.setAlwaysOnTop(true);
         workWindows.setVisible(true);
-
     }
-
 }
