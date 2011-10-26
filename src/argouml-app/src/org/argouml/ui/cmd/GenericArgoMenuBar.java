@@ -372,7 +372,7 @@ public class GenericArgoMenuBar extends JMenuBar implements
         
         
         //ActionExport2Gate + Feedback in der Menubar registrieren
-        ShortcutMgr.assignAccelerator(file.add(new ActionExport2Gate()),
+        ShortcutMgr.assignAccelerator(file.add(ActionExport2Gate.getTargetFollower()),
                 ShortcutMgr.ACTION_GATE_EXPORT);
         /*
         ShortcutMgr.assignAccelerator(file.add(new ActionShowFeedback()),

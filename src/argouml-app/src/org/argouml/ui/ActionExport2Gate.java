@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 import org.argouml.application.Main;
 import org.argouml.i18n.Translator;
 import org.argouml.persistence.PersistenceManager;
+import org.argouml.ui.targetmanager.TargetEvent;
+import org.argouml.ui.targetmanager.TargetListener;
+import org.argouml.ui.targetmanager.TargetManager;
 import org.argouml.uml.ui.ActionSaveProject;
 import org.argouml.uml.ui.SaveGraphicsManager;
 import org.argouml.util.GATEHelper;
@@ -39,6 +42,31 @@ public class ActionExport2Gate extends AbstractAction {
 
     public ActionExport2Gate() {
         super(Translator.localize("action.export-project2Gate"));
+    }
+
+    private static ActionExport2Gate targetFollower;
+
+    public static ActionExport2Gate getTargetFollower() {
+        if (targetFollower == null) {
+            targetFollower  = new ActionExport2Gate();
+            TargetManager.getInstance().addTargetListener(new TargetListener() {
+                public void targetAdded(TargetEvent e) {
+                    setTarget();
+                }
+                public void targetRemoved(TargetEvent e) {
+                    setTarget();
+                }
+
+                public void targetSet(TargetEvent e) {
+                    setTarget();
+                }
+                private void setTarget() {
+                    targetFollower.setEnabled(Main.taskID != null);
+                }
+            });
+            targetFollower.setEnabled(Main.taskID != null);
+        }
+        return targetFollower;
     }
 
     public void actionPerformed(ActionEvent e) {

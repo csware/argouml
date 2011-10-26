@@ -241,9 +241,11 @@ public class Main {
                 splash = null;
             }
 
-            //Aufrufen der Aufgabenstellung
-            ActionShowTask task = new ActionShowTask();
-            task.showTask();
+            // Aufrufen der Aufgabenstellung
+            if (taskID != null) {
+                ActionShowTask task = new ActionShowTask();
+                task.showTask();
+            }
 
             performCommands(commands);
             commands = null;
