@@ -84,7 +84,7 @@ public class GATEPartnerSelectionDialog extends ArgoDialog {
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
-        setSize(300, 200);
+        setSize(500, 300);
         setLocationRelativeTo(getParent());
 
         String partnersXML = GATEHelper
