@@ -59,6 +59,9 @@ public class GATEHelper {
             if (response.getFirstHeader("LoggedIn") != null) {
                 return null;
             }
+            if (response.getFirstHeader("SID") != null) {
+                Main.sID = response.getFirstHeader("SID").getValue();
+            }
             HttpEntity resEntity = response.getEntity();
             //System.out.println(response.getStatusLine());
             return resEntity;
