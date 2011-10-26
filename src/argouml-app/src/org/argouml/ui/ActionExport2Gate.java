@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.apache.http.client.ClientProtocolException;
@@ -75,7 +76,17 @@ public class ActionExport2Gate extends AbstractAction {
 
         List<Integer> selectedPartners = new LinkedList<Integer>();
 
+        Main.sID = null;
+        if (GATEHelper.retrieve("/ShowTask?onlydescription=true&taskid=" + Main.taskID).equals("")) {
+            JOptionPane.showMessageDialog(null, "Verbindungsaufbau zum Server fehlgeschlagen.\nBitte mit \"Projekt speichern unter\" lokal abspeichern, ArgoUML neu starten und erneut versuchen.");
+            Main.taskID = null;
+            if (e != null && e.getSource() instanceof JButton) {
+                ((JButton)e.getSource()).setEnabled(false);
+            }
+            return;
+        }
         if (Main.sID == null) {
+            // recheck SID
             GATEPartnerSelectionDialog psf = new GATEPartnerSelectionDialog();
             if (psf.success == false) return;
             selectedPartners = psf.selectedPartners;
