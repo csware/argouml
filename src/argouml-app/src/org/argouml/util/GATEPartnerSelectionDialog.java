@@ -110,8 +110,8 @@ public class GATEPartnerSelectionDialog extends ArgoDialog {
         } else {
             Node possiblePartnersNode = document.getFirstChild();
             if (possiblePartnersNode.getFirstChild() == null) {
-                JOptionPane.showMessageDialog(null,
-                        "Something strange happened. :(");
+                success = true;
+                hide();
                 return;
             }
 
