@@ -120,10 +120,6 @@ public class GATEHelper {
                     "utf-8");
         }
 
-        // Wichtig. Timingproblem
-        while (bin.getContentLength() != file.length()) {
-            Thread.sleep(100);
-        }
         // FileBody bin = new FileBody(file);
         reqEntity2.addPart("file", bin);
 

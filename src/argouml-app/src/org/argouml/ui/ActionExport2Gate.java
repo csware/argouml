@@ -82,12 +82,12 @@ public class ActionExport2Gate extends AbstractAction {
         }
 
         if (theFile != null) {
-            ProjectBrowser.getInstance().trySaveWithProgressMonitor(true,
-                    theFile, false);
+            ProjectBrowser.getInstance().trySave(true,
+                    theFile, null);
         }
 
-        ProjectBrowser.getInstance().trySaveWithProgressMonitor(true, theFile2,
-                false);
+        ProjectBrowser.getInstance().trySave(true, theFile2,
+                null);
 
         // save active diagram as image
         SaveGraphicsAction sga = SaveGraphicsManager.getInstance()
