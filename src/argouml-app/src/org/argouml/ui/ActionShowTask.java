@@ -92,7 +92,7 @@ public class ActionShowTask implements Runnable {
     public void run() {
         try {
             while (!Thread.interrupted()) {
-                GATEHelper.retrieve("/Nope");
+                GATEHelper.retrieve("/Noop");
                 try {
                     Thread.sleep(60000);
                 } catch (InterruptedException e1) {
