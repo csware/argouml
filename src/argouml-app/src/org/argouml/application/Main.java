@@ -102,6 +102,7 @@ import org.argouml.uml.diagram.state.ui.InitStateDiagram;
 import org.argouml.uml.diagram.static_structure.ui.InitClassDiagram;
 import org.argouml.uml.diagram.ui.InitDiagramAppearanceUI;
 import org.argouml.uml.diagram.use_case.ui.InitUseCaseDiagram;
+import org.argouml.uml.ui.ActionActivityDiagram;
 import org.argouml.uml.ui.InitUmlUI;
 import org.argouml.util.ArgoFrame;
 import org.argouml.util.GATEHelper;
@@ -245,6 +246,9 @@ public class Main {
             if (taskID != null) {
                 ActionShowTask task = new ActionShowTask();
                 task.showTask();
+                if (projectName == null && ActionShowTask.taskDescription != null && (ActionShowTask.taskDescription.toLowerCase().contains("aktivitätsdiagramm") || ActionShowTask.taskDescription.toLowerCase().contains("aktivitäts-diagramm") || ActionShowTask.taskDescription.toLowerCase().contains("activity diagram") || ActionShowTask.taskDescription.toLowerCase().contains("activity-diagram"))) {
+                    new ActionActivityDiagram().actionPerformed(null);
+                }
             }
 
             performCommands(commands);
