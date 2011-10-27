@@ -45,7 +45,7 @@ public class GATEPartnerSelectionDialog extends ArgoDialog {
     public GATEPartnerSelectionDialog() {
         super("Abgabe starten", ArgoDialog.CLOSE_OPTION, true);
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10, 10));
 
         text = new JLabel("Info");
         add(text, BorderLayout.NORTH);
@@ -132,7 +132,7 @@ public class GATEPartnerSelectionDialog extends ArgoDialog {
                     }
                     if (maxPartners > 0) {
                         add(mainPanel, BorderLayout.CENTER);
-                        mainPanel.setLayout(new GridLayout(maxPartners, 1));
+                        mainPanel.setLayout(new GridLayout(maxPartners, 1, 10, 10));
                     }
                     if (partners.getAttributes().getNamedItem("info") != null) {
                         text.setText("<HTML>"
