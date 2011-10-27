@@ -59,7 +59,7 @@ public class ActionShowFeedback {
                 if (e.getActionCommand().equals("Feedback")) {
                     if(ActionExport2Gate.giveFeedback){
                         ActionExport2Gate.giveFeedback = false;
-                        label.setText(GATEHelper.retrieve("/PerformTest?sid="+Main.sID+"&testid="+Main.testID));
+                        label.setText(GATEHelper.retrieve("/PerformTest?sid="+Main.sID+"&argouml=true&testid="+Main.testID));
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Bitte erst Export2Gate ausführen");
