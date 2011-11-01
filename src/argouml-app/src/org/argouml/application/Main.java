@@ -246,7 +246,7 @@ public class Main {
             if (taskID != null) {
                 ActionShowTask task = new ActionShowTask();
                 task.showTask();
-                if (projectName == null && ActionShowTask.taskDescription != null && (ActionShowTask.taskDescription.toLowerCase().contains("aktivitätsdiagramm") || ActionShowTask.taskDescription.toLowerCase().contains("aktivitäts-diagramm") || ActionShowTask.taskDescription.toLowerCase().contains("activity diagram") || ActionShowTask.taskDescription.toLowerCase().contains("activity-diagram"))) {
+                if (projectName == null && ActionShowTask.taskDescription != null && (ActionShowTask.taskDescription.toLowerCase().contains("aktivitätsdiagramm") || ActionShowTask.taskDescription.toLowerCase().contains("aktivitäts-diagramm") || ActionShowTask.taskDescription.toLowerCase().contains("aktivit&auml;tsdiagramm") || ActionShowTask.taskDescription.toLowerCase().contains("aktivit&auml;ts-diagramm") || ActionShowTask.taskDescription.toLowerCase().contains("activity diagram") || ActionShowTask.taskDescription.toLowerCase().contains("activity-diagram"))) {
                     new ActionActivityDiagram().actionPerformed(null);
                 }
             }
